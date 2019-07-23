@@ -1,5 +1,18 @@
 {% extends 'storefront/layout.html' %}
 
 {% block content %}
-    <h1>Catalog Page</h1>
+    <h1>{{ title }}</h1>
+    <ul>
+        {% for product in products %}
+            <li><a href="{{ url_for('catalog.product') + '/' + product.id }}">{{ product.name }}</a></li>
+        {% else %}
+            <li>No results.</li>
+        {% endfor %}
+    </ul>
+    {% if prev_url %}
+        <a href="{{ prev_url + '&search=' + search if search else prev_url }}">Previous</a>
+    {% endif %}
+    {% if next_url %}
+        <a href="{{ next_url + '&search=' + search if search else next_url }}">Next</a>
+    {% endif %}
 {% endblock %}
