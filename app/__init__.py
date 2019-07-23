@@ -32,4 +32,4 @@ def register_extensions(app):
     migrate.init_app(app, db)
     csrf.init_app(app)
     login.init_app(app)
-    login.login_view = 'auth.login'
+    login.login_view = 'account.login'
