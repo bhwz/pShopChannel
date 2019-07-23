@@ -1,0 +1,12 @@
+{% extends 'storefront/layout.html' %}
+
+{% block content %}
+    <h1>Account Page</h1>
+    <ul>
+        {% for order in orders %}
+            <li>Order #{{ order.id }} is product of id #{{ order.product_id }}</li>
+        {% else %}
+            <li>No orders found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

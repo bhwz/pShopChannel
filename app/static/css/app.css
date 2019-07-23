@@ -1,0 +1,8 @@
+button:disabled, a.disabled, .nav-link.disabled {
+    pointer-events: auto; /* override for newer versions of bootstrap to allow mouse-over cursor */
+    cursor: not-allowed;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

@@ -1,0 +1,15 @@
+{% extends 'storefront/layout.html' %}
+
+{% block content %}
+    <article>
+        <header>
+            <h2>{{ p.title }}</h2>
+        </header>
+        <section>
+            {{ rendered_content }}
+        </section>
+        <footer>
+            <p>Last Updated: <time datetime="{{ p.timestamp }}">{{ p.timestamp }}</time></p>
+        </footer>
+    </article>
+{% endblock %}

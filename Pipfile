@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "*"
+flask-wtf = "*"
+flask-login = "*"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
+environs = "*"
+passlib = {extras = ["argon2"],version = "*"}
+commonmark = "*"
+
+[requires]
+python_version = "3.7"

@@ -1,0 +1,5 @@
+.env
+!.env.default
+/.idea
+/migrations
+pShopChannel.sqlite
