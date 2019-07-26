@@ -13,10 +13,7 @@ def landing():
 
 @blueprint.route('/page/<string:slug>', methods=['GET'])
 def page(slug):
-    p = Page.query.filter_by(slug=slug).first_or_404()
-
-    if not p.published:
-        return abort(404)
+    p = Page.query.filter_by(slug=slug, published=True).first_or_404()
 
     return render_template(
         'storefront/pages.html',
