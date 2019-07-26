@@ -1,3 +1,4 @@
+import commonmark
 from flask import render_template, Blueprint, request, url_for
 
 from app.models import Product
@@ -23,4 +24,13 @@ def browse():
 
 @blueprint.route('/product/<int:pid>', methods=['GET'])
 def product(pid):
-    return render_template('storefront/product.html')
+    base_product = Product.query.filter_by(id=pid, published=True).first_or_404()
+    variations = Product.query.filter_by(parent_id=base_product.id, published=True)
+
+    return render_template(
+        'storefront/product.html',
+        title=base_product.name,
+        product=base_product,
+        rendered_description=commonmark.commonmark(base_product.description),
+        variations=variations.items
+    )
