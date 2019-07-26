@@ -15,7 +15,7 @@ csrf = CSRFProtect()
 
 
 def create_app():
-    app = Flask('pShopChannel', static_folder=f'{BASE_DIR}/static', static_url_path='',
+    app = Flask('pShopChannel', static_folder=f'{BASE_DIR}/static', static_url_path='/static',
                 template_folder=f'{BASE_DIR}/templates')
     app.config.from_object('app.settings')
 

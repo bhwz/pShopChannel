@@ -5,13 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
-    <link rel="mask-icon" href="{{ url_for('static', filename='safari-pinned-tab.svg') }}" color="#34516a">
-    <meta name="msapplication-TileColor" content="#aca29f">
-    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/logo/32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/logo/16x16.png') }}">
     <title>{{ title + ' | ' if title else '' }}{{ config.APP_NAME }}: {{ config.APP_SLOGAN }}</title>
 
     <!-- Twitter -->
@@ -20,13 +15,13 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ config.APP_NAME }}">
     <meta name="twitter:description" content="{{ config.APP_SLOGAN }}">
-    <meta name="twitter:image" content="{{ url_for('static', filename='social.png') }}">
+    <meta name="twitter:image" content="{{ url_for('static', filename='img/logo/512x512.png') }}">
 
     <!-- OpenGraph -->
     <meta property="og:url" content="{{ config.APP_URL }}">
     <meta property="og:title" content="{{ config.APP_NAME }}">
     <meta property="og:description" content="{{ config.APP_SLOGAN }}">
-    <meta property="og:image" content="{{ url_for('static', filename='social.png') }}">
+    <meta property="og:image" content="{{ url_for('static', filename='img/logo/512x512.png') }}">
 
     <!-- Other -->
     <meta name="description" content="{{ config.APP_SLOGAN }}">
@@ -37,7 +32,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{{ config.APP_URL }}">
-        <img src="{{ url_for('static', filename='img/brand32x.png') }}" class="d-inline-block align-top" alt="">
+        <img src="{{ url_for('static', filename='img/logo/32x32.png') }}" class="d-inline-block align-top" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
