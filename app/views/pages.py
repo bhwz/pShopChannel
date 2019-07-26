@@ -18,5 +18,9 @@ def page(slug):
     if not p.published:
         return abort(404)
 
-    return render_template('storefront/pages.html', page=p, title=p.title,
-                           rendered_content=commonmark.commonmark(p.content))
+    return render_template(
+        'storefront/pages.html',
+        page=p,
+        title=p.title,
+        rendered_content=commonmark.commonmark(p.content)
+    )

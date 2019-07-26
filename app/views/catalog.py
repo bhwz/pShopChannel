@@ -18,7 +18,12 @@ def browse():
     title = 'Search: ' + search if search else 'Catalog'
 
     return render_template(
-        'storefront/catalog.html', title=title, search=search, products=products.items, next_url=next_url, prev_url=prev_url
+        'storefront/catalog.html',
+        title=title,
+        search=search,
+        products=products.items,
+        next_url=next_url,
+        prev_url=prev_url
     )
 
 
