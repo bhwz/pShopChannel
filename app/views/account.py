@@ -17,7 +17,7 @@ def overview():
 
     orders = Order.query.filter_by(user_id=current_user.id)
 
-    return render_template('storefront/account.html', title='Account', orders=orders)
+    return render_template('account.html', title='Account', orders=orders)
 
 
 @blueprint.route('/login', methods=['GET', 'POST'])
@@ -28,7 +28,7 @@ def login():
     form = LoginForm(request.form)
 
     if request.method == 'GET':
-        return render_template('storefront/login.html', title='Login', form=form)
+        return render_template('login.html', title='Login', form=form)
 
     if not form.validate_on_submit():
         flash_errors(form)
@@ -58,7 +58,7 @@ def register():
 
     form = RegisterForm(request.form)
     if request.method == 'GET':
-        return render_template('storefront/register.html', title='Register', form=form)
+        return render_template('register.html', title='Register', form=form)
 
     if not form.validate_on_submit():
         flash_errors(form)

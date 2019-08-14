@@ -18,7 +18,7 @@ def browse():
     title = 'Search: ' + search if search else 'Catalog'
 
     return render_template(
-        'storefront/catalog.html',
+        'catalog.html',
         title=title,
         search=search,
         products=products.items,
@@ -33,7 +33,7 @@ def product(pid):
     variations = Product.query.filter_by(parent_id=base_product.id, published=True)
 
     return render_template(
-        'storefront/product.html',
+        'product.html',
         title=base_product.name,
         product=base_product,
         rendered_description=commonmark.commonmark(base_product.description),
