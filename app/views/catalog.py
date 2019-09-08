@@ -37,5 +37,5 @@ def product(pid):
         title=base_product.name,
         product=base_product,
         rendered_description=commonmark.commonmark(base_product.description),
-        variations=variations.items
+        variations=variations
     )

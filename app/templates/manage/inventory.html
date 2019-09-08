@@ -2,9 +2,13 @@
 
 {% block content %}
     <h1>{{ title }}</h1>
+    <div>
+        <button type="button" class="btn btn-link"><a href="{{ url_for('manage.product') }}">Add +</a></button>
+    </div>
+    <hr>
     <ul>
         {% for product in products %}
-            <li><a href="{{ url_for('catalog.product', pid=product.id) }}">{{ product.name }}</a></li>
+            <li><a href="{{ url_for('manage.product') + '?edit=' ~ product.id }}">{{ product.name }}</a></li>
         {% else %}
             <li>No results.</li>
         {% endfor %}

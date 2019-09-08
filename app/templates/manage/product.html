@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <hr>
+    <form action="{{ url_for('manage.product') }}{{ '?edit=' ~ product.id if product else '' }}" method="post" role="form">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="name">{{ form.name.label.text }}</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ product.name if product else '' }}">
+            <small id="nameHelpBlock" class="form-text text-muted">
+                The name of the product.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="stock">{{ form.stock.label.text }}</label>
+            <input type="number" min="0" step="1" class="form-control" id="stock" name="stock" value="{{ product.stock if product else '0' }}">
+            <small id="stockHelpBlock" class="form-text text-muted">
+                The current stock of the product.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="price">{{ form.price.label.text }}</label>
+            <input type="number" min="0" step="1" class="form-control" id="price" name="price" value="{{ product.price if product else '0' }}">
+            <small id="priceHelpBlock" class="form-text text-muted">
+                The selling price of the product in USD cents as a whole number. For example, if you wanted to set the price to five dollars you would enter 500 here.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="description">{{ form.description.label.text }}</label>
+            <textarea class="form-control" id="description" name="description" rows="4">{{ product.description if product else '' }}</textarea>
+            <small id="descriptionHelpBlock" class="form-text text-muted">
+                A description of the product. Supports valid CommonMark markdown formatting.
+            </small>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" class="form-check-input" id="customizable" name="customizable">
+            <label class="form-check-label" for="customizable">{{ form.customizable.label.text }}</label>
+            <small id="customizableHelpBlock" class="form-text text-muted">
+                Check this box if the item supports orders. A textbox will be presented at checkout to the customer where they can describe their custom order request.
+            </small>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" class="form-check-input" id="published" name="published">
+            <label class="form-check-label" for="published">{{ form.published.label.text }}</label>
+            <small id="publishedHelpBlock" class="form-text text-muted">
+                Check this box when the product is ready for listing, or leave it unchecked to remove the product from the catalog.
+            </small>
+        </div>
+        <div class="form-group form-check">
+            <div class="float-right">
+                <button type="submit" class="btn btn-outline-primary">{{ form.submit.label.text }}</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

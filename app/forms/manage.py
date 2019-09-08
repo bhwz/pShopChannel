@@ -2,11 +2,9 @@ from flask_wtf import FlaskForm
 from wtforms import validators, SubmitField, BooleanField, StringField, IntegerField
 
 
-class EditInventoryForm(FlaskForm):
+class EditProductForm(FlaskForm):
     parent_id = IntegerField('Parent Id')
-    published = BooleanField('Published', validators=[
-        validators.DataRequired(message='Please specify if the product is published.')
-    ])
+    published = BooleanField('Published')
     name = StringField('Name', validators=[
         validators.DataRequired(message='Please give the product a name.')
     ])
@@ -15,7 +13,5 @@ class EditInventoryForm(FlaskForm):
     description = StringField('Description', validators=[
         validators.DataRequired(message='Please give the product a description.')
     ])
-    customizable = BooleanField('Customizable', validators=[
-        validators.DataRequired(message='Please specify if the product is customizable.')
-    ])
+    customizable = BooleanField('Customizable')
     submit = SubmitField('Submit')

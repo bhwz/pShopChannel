@@ -1,18 +1,21 @@
-from flask import Blueprint, abort, render_template, request
+from flask import Blueprint, abort, render_template, request, url_for, redirect
 from flask_login import current_user
 
+from app import db
+from app.forms.error import flash_errors
+from app.forms.manage import EditProductForm
 from app.models import Product
 
 blueprint = Blueprint('manage', __name__, url_prefix='/manage')
 
 
 @blueprint.route('/dashboard', methods=['GET'])
-def overview():
+def dashboard():
     if not current_user.admin:
         abort(404)
         return ''
 
-    return render_template('dashboard.html', title='Dashboard')
+    return render_template('manage/dashboard.html', title='Dashboard')
 
 
 @blueprint.route('/inventory', methods=['GET'])
@@ -21,26 +24,57 @@ def inventory():
         abort(404)
         return ''
 
-    return render_template('inventory.html', title='Inventory')
+    page = request.args.get('page', 1, type=int)
+    max_results = 32
+    products = Product.query.paginate(page, max_results, False)
+    next_url = url_for('manage.inventory', page=products.next_num) if products.has_next else None
+    prev_url = url_for('manage.inventory', page=products.prev_num) if products.has_prev else None
+
+    return render_template(
+        'manage/inventory.html',
+        title='Inventory',
+        products=products.items,
+        next_url=next_url,
+        prev_url=prev_url
+    )
 
 
-@blueprint.route('/inventory/add', methods=['GET', 'POST'])
-def add(pid):
+@blueprint.route('/product', methods=['GET', 'POST'])
+def product():
     if not current_user.admin:
         abort(404)
         return ''
 
-    if request.method == 'GET':
-        return render_template('product_editor.html', title='Add Product', product=None)
-
-
-@blueprint.route('/inventory/edit/<int:pid>', methods=['GET', 'POST'])
-def edit(pid):
-    if not current_user.admin:
-        abort(404)
-        return ''
+    form = EditProductForm(request.form)
 
     if request.method == 'GET':
-        product = Product.query.filter_by(id=pid).first_or_404()
-        # Pass Product to pre-populate forms with existing data.
-        return render_template('product_editor.html', title='Edit Product', product=product)
+        target = request.args.get('edit', None, type=int)
+        editable_product = Product.query.filter_by(id=target).first_or_404() if target else None
+
+        title = 'Edit Product' if editable_product else 'Add Product'
+
+        return render_template(
+            'manage/product.html',
+            title=title,
+            target=target,
+            product=editable_product,
+            form=form
+        )
+
+    if not form.validate_on_submit():
+        flash_errors(form)
+        return redirect(url_for('manage.product'))
+
+    target = request.args.get('edit', None, type=int)
+    editable_product = Product.query.filter_by(id=target).first_or_404() if target else Product()
+
+    editable_product.published = form.published.data
+    editable_product.name = form.name.data
+    editable_product.stock = form.stock.data
+    editable_product.price = form.price.data
+    editable_product.description = form.description.data
+    editable_product.customizable = form.customizable.data
+
+    db.session.add(editable_product)
+    db.session.commit()
+    return redirect(url_for('manage.inventory'))
