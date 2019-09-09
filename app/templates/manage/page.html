@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <hr>
+    <form action="{{ url_for('manage.page') }}{{ '?edit=' ~ page.id if page else '' }}" method="post" role="form">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="title">{{ form.title.label.text }}</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ page.title if page else '' }}">
+            <small id="titleHelpBlock" class="form-text text-muted">
+                The name of the product.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="slug">{{ form.slug.label.text }}</label>
+            <input type="text" class="form-control" id="slug" name="slug" value="{{ page.slug if page else '' }}">
+            <small id="slugHelpBlock" class="form-text text-muted">
+                The URL slug for the page. Must be 1024 characters or less.
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="content">{{ form.content.label.text }}</label>
+            <textarea class="form-control" id="content" name="content" rows="8">{{ page.content if page else '' }}</textarea>
+            <small id="descriptionHelpBlock" class="form-text text-muted">
+                Content for the page. Supports valid CommonMark markdown formatting.
+            </small>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" class="form-check-input" id="published" name="published">
+            <label class="form-check-label" for="published">{{ form.published.label.text }}</label>
+            <small id="publishedHelpBlock" class="form-text text-muted">
+                Check this box when the page is ready to be published, or leave it unchecked to hide the page.
+            </small>
+        </div>
+        <div class="form-group form-check">
+            <div class="float-right">
+                <button type="submit" class="btn btn-outline-primary">{{ form.submit.label.text }}</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

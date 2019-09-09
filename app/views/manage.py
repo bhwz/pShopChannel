@@ -3,8 +3,8 @@ from flask_login import current_user
 
 from app import db
 from app.forms.error import flash_errors
-from app.forms.manage import EditProductForm
-from app.models import Product
+from app.forms.manage import EditProductForm, EditPageForm
+from app.models import Product, Page
 
 blueprint = Blueprint('manage', __name__, url_prefix='/manage')
 
@@ -56,7 +56,6 @@ def product():
         return render_template(
             'manage/product.html',
             title=title,
-            target=target,
             product=editable_product,
             form=form
         )
@@ -78,3 +77,52 @@ def product():
     db.session.add(editable_product)
     db.session.commit()
     return redirect(url_for('manage.inventory'))
+
+
+@blueprint.route('/special-pages', methods=['GET'])
+def special_pages():
+    if not current_user.admin:
+        abort(404)
+        return ''
+
+    pages = Page.query.all()
+
+    return render_template('manage/special_pages.html', title='Special Pages', pages=pages)
+
+
+@blueprint.route('/page', methods=['GET', 'POST'])
+def page():
+    if not current_user.admin:
+        abort(404)
+        return ''
+
+    form = EditPageForm(request.form)
+
+    if request.method == 'GET':
+        target = request.args.get('edit', None, type=int)
+        editable_page = Page.query.filter_by(id=target).first_or_404() if target else None
+
+        title = 'Edit Page' if editable_page else 'Add Page'
+
+        return render_template(
+            'manage/page.html',
+            title=title,
+            page=editable_page,
+            form=form
+        )
+
+    if not form.validate_on_submit():
+        flash_errors(form)
+        return redirect(url_for('manage.page'))
+
+    target = request.args.get('edit', None, type=int)
+    editable_page = Page.query.filter_by(id=target).first_or_404() if target else Page()
+
+    editable_page.published = form.published.data
+    editable_page.title = form.title.data
+    editable_page.slug = form.slug.data
+    editable_page.content = form.content.data
+
+    db.session.add(editable_page)
+    db.session.commit()
+    return redirect(url_for('manage.special_pages'))

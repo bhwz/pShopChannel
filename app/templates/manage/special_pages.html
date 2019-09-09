@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <div>
+        <button type="button" class="btn btn-link"><a href="{{ url_for('manage.page') }}">Add +</a></button>
+    </div>
+    <hr>
+    <ul>
+        {% for page in pages %}
+            <li><a href="{{ url_for('manage.page') + '?edit=' ~ page.id }}">{{ page.title }}</a></li>
+        {% else %}
+            <li>No results.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

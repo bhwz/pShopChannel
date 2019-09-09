@@ -15,3 +15,18 @@ class EditProductForm(FlaskForm):
     ])
     customizable = BooleanField('Customizable')
     submit = SubmitField('Submit')
+
+
+class EditPageForm(FlaskForm):
+    published = BooleanField('Published')
+    slug = StringField('Slug', validators=[
+        validators.DataRequired(message='A URL slug is required.'),
+        validators.Length(message='Please choose a slug shorter than 1024 characters.', max=1024)
+    ])
+    title = StringField('Title', validators=[
+        validators.DataRequired(message='A title is required.')
+    ])
+    content = StringField('Content', validators=[
+        validators.DataRequired(message='Page content is required.')
+    ])
+    submit = SubmitField('Submit')
