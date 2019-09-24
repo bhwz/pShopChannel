@@ -13,7 +13,7 @@ class EditProductForm(FlaskForm):
     description = StringField('Description', validators=[
         validators.DataRequired(message='Please give the product a description.')
     ])
-    customizable = BooleanField('Customizable')
+    notes_enabled = BooleanField('Notes Enabled')
     submit = SubmitField('Submit')
 
 

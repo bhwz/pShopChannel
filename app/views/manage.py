@@ -72,7 +72,7 @@ def product():
     editable_product.stock = form.stock.data
     editable_product.price = form.price.data
     editable_product.description = form.description.data
-    editable_product.customizable = form.customizable.data
+    editable_product.notes_enabled = form.notes_enabled.data
 
     db.session.add(editable_product)
     db.session.commit()

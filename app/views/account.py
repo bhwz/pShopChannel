@@ -23,7 +23,7 @@ def overview():
 @blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('pages.overview'))
+        return redirect(url_for('pages.landing'))
 
     form = LoginForm(request.form)
 

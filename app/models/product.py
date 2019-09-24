@@ -13,5 +13,5 @@ class Product(db.Model):
     stock = Column(Integer(), nullable=False, default=0)
     price = Column(Integer(), nullable=False, default=500)
     description = Column(Text(), nullable=False, default='No Description')
-    customizable = Column(Boolean(), nullable=False, default=True)
+    notes_enabled = Column(Boolean(), nullable=False, default=True)
     variations = relationship('Product')

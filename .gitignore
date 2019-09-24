@@ -3,3 +3,5 @@
 /.idea
 /migrations
 pShopChannel.sqlite
+__pycache__/
+*.py[cod]
