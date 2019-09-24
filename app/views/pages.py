@@ -8,7 +8,7 @@ blueprint = Blueprint('pages', __name__)
 
 @blueprint.route('/', methods=['GET'])
 def landing():
-    return render_template('landing.html', title='Home')
+    return render_template('pages/landing.html', title='Home')
 
 
 @blueprint.route('/page/<string:slug>', methods=['GET'])
@@ -16,7 +16,7 @@ def page(slug):
     p = Page.query.filter_by(slug=slug, published=True).first_or_404()
 
     return render_template(
-        'pages.html',
+        'pages/page.html',
         page=p,
         title=p.title,
         rendered_content=commonmark.commonmark(p.content)

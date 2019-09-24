@@ -1,7 +1,7 @@
 import commonmark
 from flask import render_template, Blueprint, request, url_for
 
-from app.forms.cart import AddToCartForm
+from app.forms.order import OrderForm
 from app.models import Product
 
 blueprint = Blueprint('catalog', __name__, url_prefix='/catalog')
@@ -19,7 +19,7 @@ def browse():
     title = 'Search: ' + search if search else 'Catalog'
 
     return render_template(
-        'catalog.html',
+        'catalog/browse.html',
         title=title,
         search=search,
         products=products.items,
@@ -30,12 +30,12 @@ def browse():
 
 @blueprint.route('/product/<int:pid>', methods=['GET'])
 def product(pid):
-    form = AddToCartForm(request.form)
+    form = OrderForm(request.form)
     base_product = Product.query.filter_by(id=pid, published=True).first_or_404()
     variations = Product.query.filter_by(parent_id=base_product.id, published=True)
 
     return render_template(
-        'product.html',
+        'catalog/product.html',
         title=base_product.name,
         product=base_product,
         rendered_description=commonmark.commonmark(base_product.description),
